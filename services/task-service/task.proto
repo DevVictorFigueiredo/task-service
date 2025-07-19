@@ -1,0 +1,85 @@
+syntax = "proto3"; // Define a versão do Protocol Buffers (proto3 é a versão mais recente)
+
+package tasks; // Define o nome do pacote para evitar conflitos de nome. Usado na importação no TypeScript.
+
+// Mensagem que representa uma tarefa
+message Task {
+  string id = 1;          // O ID único da tarefa
+  string title = 2;       // O título da tarefa
+  string description = 3; // A descrição da tarefa (opcional)
+  bool completed = 4;     // Indica se a tarefa está completa ou não
+  string createdAt = 5;   // Timestamp de criação (como string ISO 8601)
+  string updatedAt = 6;   // Timestamp da última atualização (como string ISO 8601)
+}
+
+// Mensagem para a requisição de criação de uma tarefa
+message CreateTaskRequest {
+  string title = 1;
+  string description = 2; // Campo opcional
+}
+
+// Mensagem para a resposta de criação de uma tarefa
+message CreateTaskResponse {
+  Task task = 1; // Retorna a tarefa criada
+}
+
+// Mensagem vazia para requisições que não precisam de parâmetros
+message GetTasksRequest {}
+
+// Mensagem para a resposta de listagem de tarefas
+message GetTasksResponse {
+  repeated Task tasks = 1; // 'repeated' indica uma lista de objetos Task
+}
+
+// Mensagem para a requisição de buscar tarefa por ID
+message GetTaskByIdRequest {
+  string id = 1;
+}
+
+// Mensagem para a resposta de buscar tarefa por ID
+message GetTaskByIdResponse {
+  Task task = 1; // Retorna a tarefa encontrada
+}
+
+// Mensagem para a requisição de atualização de tarefa
+message UpdateTaskRequest {
+  string id = 1;
+  // Campos opcionais que podem ser atualizados
+  optional string title = 2;
+  optional string description = 3;
+  optional bool completed = 4;
+}
+
+// Mensagem para a resposta de atualização de tarefa
+message UpdateTaskResponse {
+  Task task = 1; // Retorna a tarefa atualizada
+}
+
+// Mensagem para a requisição de deleção de tarefa
+message DeleteTaskRequest {
+  string id = 1;
+}
+
+// Mensagem para a resposta de deleção de tarefa
+message DeleteTaskResponse {
+  bool success = 1; // Indica se a deleção foi bem-sucedida
+}
+
+// Definição do Serviço gRPC
+// Este é o "contrato" de todas as operações que seu microsserviço TaskService oferece
+service TaskService {
+  // Cria uma nova tarefa
+  rpc CreateTask (CreateTaskRequest) returns (CreateTaskResponse);
+
+  // Obtém todas as tarefas
+  rpc GetTasks (GetTasksRequest) returns (GetTasksResponse);
+
+  // Obtém uma tarefa por ID
+  rpc GetTaskById (GetTaskByIdRequest) returns (GetTaskByIdResponse);
+
+  // Atualiza uma tarefa existente
+  rpc UpdateTask (UpdateTaskRequest) returns (UpdateTaskResponse);
+
+  // Deleta uma tarefa
+  rpc DeleteTask (DeleteTaskRequest) returns (DeleteTaskResponse);
+}

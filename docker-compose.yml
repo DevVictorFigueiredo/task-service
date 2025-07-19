@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16-alpine # Usamos uma imagem leve do Postgres
+    restart: always
+    environment:
+      POSTGRES_DB: todolist_db # Nome do seu banco de dados
+      POSTGRES_USER: user # Usuário do banco de dados
+      POSTGRES_PASSWORD: password # Senha do banco de dados
+    ports:
+      - "5432:5432" # Mapeia a porta do contêiner para a sua máquina
+    volumes:
+      - db_data:/var/lib/postgresql/data # Persiste os dados do banco
+
+volumes:
+  db_data: # Volume para persistir os dados
