@@ -1,7 +1,3 @@
-Entendi! Você quer que eu já substitua SEU_USUARIO pelo seu nome de usuário do GitHub, DevVictorFigueiredo, nos README.mds para o Task Service, API Gateway e Frontend.
-
-Aqui estão os README.mds prontos para você copiar e colar diretamente, já com o seu nome de usuário:
-
 📝 Task Service - Microsserviço de Gestão de Tarefas
 
 ✨ Visão Geral
